@@ -61,6 +61,11 @@
     NSString *_media;
 }
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 RCT_EXPORT_MODULE(InCallManager)
 
 - (instancetype)init
@@ -291,7 +296,7 @@ RCT_EXPORT_METHOD(setMicrophoneMute:(BOOL)enable)
     NSLog(@"RNInCallManager.setMicrophoneMute(): ios doesn't support setMicrophoneMute()");
 }
 
-- (void)startRingback:(NSString *)_ringbackUriType
+RCT_EXPORT_METHOD(startRingback:(NSString *)_ringbackUriType)
 {
     // you may rejected by apple when publish app if you use system sound instead of bundled sound.
     NSLog(@"RNInCallManager.startRingback(): type=%@", _ringbackUriType);
@@ -1285,11 +1290,6 @@ RCT_EXPORT_METHOD(stopProximitySensor)
 {
     NSString *filename = player.url.URLByDeletingPathExtension.lastPathComponent;
     NSLog(@"RNInCallManager.audioPlayerDecodeErrorDidOccur(): player=%@, error=%@", filename, error.localizedDescription);
-}
-
-+ (BOOL)requiresMainQueueSetup
-{
-    return NO;
 }
 
 // --- Deprecated in iOS 8.0.
